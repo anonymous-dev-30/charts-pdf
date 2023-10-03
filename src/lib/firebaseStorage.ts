@@ -26,7 +26,3 @@ export async function uploadToS3(file: File) {
     return snapshot.ref.fullPath;
   } catch (error) {}
 }
-
-export function getS3Url(file_key: string) {
-  return `${process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_STORAGE}/${file_key}?alt=media`;
-}

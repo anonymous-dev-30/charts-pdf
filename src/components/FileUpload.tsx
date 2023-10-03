@@ -20,9 +20,7 @@ const FileUpload = () => {
   });
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
-    onDrop: async (file) => {
-      console.log("file", file);
-      // s3 alternative
+    onDrop: async (file) => {      
       if (file[0].size < 10 * 1024 * 1024) {
         try {
             const path = await uploadToS3(file[0]);
@@ -32,6 +30,13 @@ const FileUpload = () => {
             mutate({
                 file_name: file[0].name,
                 file_key: path || ""
+            }, {
+                onSuccess: (data) => { 
+                    console.log("data", data);                    
+                 },
+                onError: (err) => {
+                    // toast
+                }
             });
         } catch (error) {
           console.error("error >> FileUpload", error);
